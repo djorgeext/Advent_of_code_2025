@@ -7,11 +7,14 @@ degrees = [int(x[1:]) for x in lines]
 count = 0
 position = 50
 
-for i in range(len(rotations)):
-    if rotations[i] == "R":
-        temp = position + degrees[i]
-        if temp >= 100:
-            temp -= 100
-        position = temp
+# function to determine the new position of the ship after a rotation
+def rotate(position, rotation, degree):
+    temp = position + degree if rotation == "R" else position - degree
+    return temp % 100
 
-    else:
+for i in range(len(rotations)):
+    position = rotate(position, rotations[i], degrees[i])
+    if position == 0:
+        count += 1
+
+print(count)
